@@ -62,12 +62,12 @@ def resize_images_in_directory(directory, out_dir, target_area):
                     
                     # 缩放图像
                     resized_img = img.resize((new_width, new_height))
-                    
-                    # 直接覆盖原始图像
-                    resized_img.save(os.path.join(out_dir, filename))
-                    print(f"已覆盖原始图像：{file_path}")
                 else:
+                    resized_img = img
                     print(f"图像 {filename} 的面积已经小于目标面积，不做处理。")
+                # 直接覆盖原始图像
+                resized_img.save(os.path.join(out_dir, filename))
+                print(f"已覆盖原始图像：{file_path}")
             except Exception as e:
                 print(f"处理图像 {filename} 时出错：{e}")
         else:
@@ -76,13 +76,13 @@ def resize_images_in_directory(directory, out_dir, target_area):
 
 device = "cuda"
 
-image_resize_dir = "input_images_resize"
-result_dir = "output_images"
-checkpoint_path = os.path.join("trained_checkpoint", "checkpoint_u2net.pth")
+image_resize_dir = "./input_images_resize"
+result_dir = "./output_images"
+checkpoint_path = os.path.join("./trained_checkpoint", "checkpoint_u2net.pth")
 do_palette = True
 
-src_input_images_dir = "input_images"
-target_area = 500*500
+src_input_images_dir = "./input_images"
+target_area = 700*700
 move_all_to_trash(image_resize_dir)
 resize_images_in_directory(src_input_images_dir, image_resize_dir, target_area)
 
